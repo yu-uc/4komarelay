@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 export default class Login extends React.Component<any, any> {
   constructor(props: any) {
@@ -31,17 +32,21 @@ export default class Login extends React.Component<any, any> {
         <div>
           <div>
             <label htmlFor="">ID</label>
-            <input
-              type="text"
-              onChange={(id) => this.setUserEmail(id)}
-            />
+            <input type="text" onChange={(id) => this.setUserEmail(id)} />
           </div>
           <label htmlFor="">パスワード</label>
-          <input type="password" onChange={(pass) => this.setUserPassword(pass)} />
+          <input
+            type="password"
+            onChange={(pass) => this.setUserPassword(pass)}
+          />
           <div>
-            <button onClick={() => console.log("クリックされました")}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => console.log("クリックされました")}
+            >
               ログイン
-            </button>
+            </Button>
           </div>
           <p>
             <Link to="/">home</Link>
