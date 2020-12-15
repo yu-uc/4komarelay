@@ -24,7 +24,11 @@ export default class Login extends React.Component<any, any> {
     });
   }
   getAuthentication(id: any, pass: any) {
-    const res = window.fetch("ss");
+    const res = window.fetch(
+      "http://localhost:3000/api/v1/works/http://localhost:3000/api/v1/user/login?id=" +
+        "id&&pwd=" +
+        pass
+    );
     console.log(res);
   }
   render() {
