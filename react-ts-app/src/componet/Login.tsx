@@ -23,7 +23,10 @@ export default class Login extends React.Component<any, any> {
       userPassword: pass.target.value,
     });
   }
-
+  getAuthentication(id: any, pass: any) {
+    const res = window.fetch("ss");
+    console.log(res);
+  }
   render() {
     console.log(this.state.userEmail);
 
@@ -41,9 +44,10 @@ export default class Login extends React.Component<any, any> {
           />
           <div>
             <Button
+              id="login"
               variant="contained"
               color="primary"
-              onClick={() => console.log("クリックされました")}
+              onClick={() => this.getAuthentication("uchida", "yuta")}
             >
               ログイン
             </Button>
