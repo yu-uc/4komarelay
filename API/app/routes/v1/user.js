@@ -45,24 +45,25 @@ router.get('/id', function (req, res) {
 
 router.get('/login', function (req, res) {
 
-    var SQL = `SELECT password FROM userkanrihyo WHERE userid=\'${req.query.id}\'`;
+    // var SQL = `SELECT password FROM userkanrihyo WHERE userid=\'${req.query.id}\'`;
 
-    pool.connect(function (err, client) {
-        if (err) {
-            console.log(err);
-        } else {
-            client.query(SQL, function (err, result) {
-                console.log(result.rows[0]);
-                if (result.rows[0] == undefined) {
-                    res.send(false);
-                } else if (result.rows[0].password == req.query.pwd) {
-                    res.send(true);
-                } else {
-                    res.send(false);
-                }
-            });
-        }
-    });
+    // pool.connect(function (err, client) {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         client.query(SQL, function (err, result) {
+    //             console.log(result.rows[0]);
+    //             if (result.rows[0] == undefined) {
+    //                 res.send(false);
+    //             } else if (result.rows[0].password == req.query.pwd) {
+    //                 res.send(true);
+    //             } else {
+    //                 res.send(false);
+    //             }
+    //         });
+    //     }
+    // });
+    res.send(false);
 });
 
 //router.post('/register', function (req, res) {
