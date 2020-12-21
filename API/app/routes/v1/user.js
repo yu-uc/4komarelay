@@ -46,6 +46,7 @@ router.get('/id', function (req, res) {
 router.get('/login', function (req, res) {
 
     // var SQL = `SELECT password FROM userkanrihyo WHERE userid=\'${req.query.id}\'`;
+    console.log(req.query.id);
 
     // pool.connect(function (err, client) {
     //     if (err) {

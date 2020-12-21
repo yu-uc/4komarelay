@@ -32,18 +32,31 @@ const Login = (props: any) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
-  const getAuthentication = () => {
+  const getAuthentication = async () => {
     console.log(userEmail);
     console.log(userPassword);
+
+    // const url =
+    //   "http://localhost:3000/api/v1/user/login?id=" +
+    //   userEmail +
+    //   "&pwd=" +
+    //   userPassword;
     //入力したidとパスワードをapiに送信
-    const res = window.fetch(
-      "http://localhost:3000/api/v1/works/http://localhost:3000/api/v1/user/login?id=" +
-        userEmail +
-        "&pwd=" +
-        userPassword
-    );
-    console.log(res);
-    if (res) {
+    const boolean = await fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        console.log("成功");
+        return res.json();
+      })
+      .catch((error) => {
+        console.error("失敗", error);
+        return null;
+      });
+    // const a = res.text;
+    // const b = res.json;
+    // const c = res.status;
+
+    console.log(boolean);
+    if (boolean) {
       console.log("true");
     } else {
       console.log("false");
