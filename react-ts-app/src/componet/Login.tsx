@@ -38,7 +38,7 @@ const Login = (props: any) => {
     console.log(userPassword);
 
     const url =
-      "http://localhost:3000/api/v1/user/login?id=" +
+      "http://localhost:3000/api/method/login?id=" +
       userEmail +
       "&pwd=" +
       userPassword;
