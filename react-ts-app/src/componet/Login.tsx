@@ -36,13 +36,13 @@ const Login = (props: any) => {
     console.log(userEmail);
     console.log(userPassword);
 
-    // const url =
-    //   "http://localhost:3000/api/v1/user/login?id=" +
-    //   userEmail +
-    //   "&pwd=" +
-    //   userPassword;
-    //入力したidとパスワードをapiに送信
-    const boolean = await fetch("https://jsonplaceholder.typicode.com/users")
+    const url =
+      "http://localhost:3000/api/v1/user/login?id=" +
+      userEmail +
+      "&pwd=" +
+      userPassword;
+   // 入力したidとパスワードをapiに送信
+    const boolean = await fetch(url)
       .then((res) => {
         console.log("成功");
         return res.json();

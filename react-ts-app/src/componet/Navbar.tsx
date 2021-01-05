@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
@@ -12,6 +12,8 @@ import {
   IconButton,
   fade,
   Typography,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     koumoku: {
-      color:"#FFF",
+      color: "#FFF",
       display: "none",
       [theme.breakpoints.up("sm")]: {
         display: "block",
@@ -87,6 +89,16 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   const classes = useStyles();
 
+  //ドロップダウンメニュー
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }; //ドロップダウンを選択したとき
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.toolBar} position="static">
@@ -102,9 +114,38 @@ const Navbar = () => {
           <Typography variant="h5" className={classes.title}>
             ４コマリレー
           </Typography>
-          <Typography variant="h6" className={classes.koumoku}><Link to="/login">Login</Link></Typography>
-          <Typography variant="h6" className={classes.koumoku}>４コマリレー</Typography>
-          <Typography variant="h6" className={classes.koumoku}>４コマリレー</Typography>
+          <Typography variant="h6" className={classes.koumoku}>
+            <Link to="/login">Login</Link>
+          </Typography>
+          <div>
+            <Typography
+              variant="h6"
+              className={classes.koumoku}
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              完成作品
+            </Typography>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>
+                {" "}
+                <Link to="/login">全て</Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>アクション</MenuItem>
+              <MenuItem onClick={handleClose}>ギャグ</MenuItem>
+            </Menu>
+          </div>
+
+          <Typography variant="h6" className={classes.koumoku}>
+            未完成作品
+          </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
