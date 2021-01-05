@@ -31,6 +31,7 @@ const Login = (props: any) => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
 
   const getAuthentication = async () => {
     console.log(userEmail);
@@ -52,12 +53,22 @@ const Login = (props: any) => {
         return null;
       });
 
-    //  console.log(res);
+    console.log(res);
     if (res) {
-      console.log("true");
+      //console.log("true");
+      console.log(isLogin);
+      setIsLogin(true);
+      console.log(isLogin);
+      handleToHomePage();
     } else {
       console.log("false");
     }
+
+    return true;
+  };
+  //trueの時ページ遷移
+  const handleToHomePage = () => {
+    props.history.push("/");
   };
 
   return (

@@ -66,7 +66,7 @@ router.get('/login', function (req, res) {
     //     }
     // });
 
-    res.send(false);
+    res.send(true);
 
 });
 
