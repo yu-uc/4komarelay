@@ -41,22 +41,19 @@ const Login = (props: any) => {
       userEmail +
       "&pwd=" +
       userPassword;
-   // 入力したidとパスワードをapiに送信
-    const boolean = await fetch(url)
+    // 入力したidとパスワードをapiに送信
+    const res = await fetch(url)
       .then((res) => {
-        console.log("成功");
+        console.log("通信に成功しました");
         return res.json();
       })
       .catch((error) => {
-        console.error("失敗", error);
+        console.error("通信に失敗しました", error);
         return null;
       });
-    // const a = res.text;
-    // const b = res.json;
-    // const c = res.status;
 
-    console.log(boolean);
-    if (boolean) {
+    //  console.log(res);
+    if (res) {
       console.log("true");
     } else {
       console.log("false");

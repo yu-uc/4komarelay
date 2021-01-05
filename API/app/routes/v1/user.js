@@ -44,9 +44,10 @@ router.get('/id', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-
+    res.set({ 'Access-Control-Allow-Origin': '*' }); 
     // var SQL = `SELECT password FROM userkanrihyo WHERE userid=\'${req.query.id}\'`;
     console.log(req.query.id);
+    console.log(req.query.pwd);
 
     // pool.connect(function (err, client) {
     //     if (err) {
@@ -64,7 +65,9 @@ router.get('/login', function (req, res) {
     //         });
     //     }
     // });
+
     res.send(false);
+
 });
 
 //router.post('/register', function (req, res) {
