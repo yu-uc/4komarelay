@@ -3,6 +3,7 @@ import "./App.css";
 import Login from "./componet/Login";
 import Home from "./componet/Home";
 import Registration from "./componet/Registration";
+import Scroll from "./componet/Scroll";
 
 import { BrowserRouter, Route } from "react-router-dom";
 
