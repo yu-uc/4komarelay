@@ -31,7 +31,7 @@ const Registration = (props: any) => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
+ const [isLogin, setIsLogin] = useState(false);
 
   const getAuthentication = async () => {
     console.log(userEmail);
