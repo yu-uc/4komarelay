@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   // Grid,
-  // Button,
+  Button,
   // TextField,
   // Container,
   AppBar,
@@ -14,6 +14,7 @@ import {
   Typography,
   Menu,
   MenuItem,
+  TextField,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
     koumoku: {
       color: "#FFF",
       display: "none",
+      padding: theme.spacing(1),
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
@@ -70,6 +72,10 @@ const useStyles = makeStyles((theme: Theme) =>
     inputRoot: {
       color: "inherit",
     },
+    btn: {
+      height: "100%",
+      padding: "6px 12px",
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -91,6 +97,22 @@ const Navbar = () => {
 
   //ドロップダウンメニュー
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+  //検索キーワード
+  const [keyWord, setKeyWord] = React.useState("");
+
+  //検索フォームの情報からsidを取得する
+  const callSrchApi = async () => {
+    console.log(keyWord);
+  };
+  const callKanseiApi = async (jyanru: any) => {
+    console.log(jyanru);
+    handleClose();
+  };
+  const callMikanseiApi = async (jyanru: any) => {
+    console.log(jyanru);
+    handleClose();
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -103,61 +125,84 @@ const Navbar = () => {
     <div className={classes.root}>
       <AppBar className={classes.toolBar} position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h5" className={classes.title}>
             ４コマリレー
           </Typography>
           <Typography variant="h6" className={classes.koumoku}>
-            <Link to="/login">Login</Link>
+            マイページ
           </Typography>
           <div>
             <Typography
               variant="h6"
               className={classes.koumoku}
-              aria-controls="simple-menu"
+              aria-controls="simple-menu1"
               aria-haspopup="true"
               onClick={handleClick}
             >
               完成作品
             </Typography>
             <Menu
-              id="simple-menu"
+              id="simple-menu1"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>
-                {" "}
-                <Link to="/login">全て</Link>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>アクション</MenuItem>
+              <MenuItem onClick={handleClose}>全て</MenuItem>
               <MenuItem onClick={handleClose}>ギャグ</MenuItem>
+              <MenuItem onClick={handleClose}>シリアス</MenuItem>
             </Menu>
           </div>
-
-          <Typography variant="h6" className={classes.koumoku}>
-            未完成作品
-          </Typography>
+          <div>
+            <Typography
+              variant="h6"
+              className={classes.koumoku}
+              aria-controls="simple-menu2"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              未完成作品
+            </Typography>
+            <Menu
+              id="simple-menu2"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={() => callKanseiApi("free")}>全て</MenuItem>
+              <MenuItem onClick={handleClose}>ギャグ</MenuItem>
+              <MenuItem onClick={handleClose}>ラブコメ</MenuItem>
+            </Menu>
+          </div>
+          {/* 検索フォーム */}
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
+            {/* <div className={classes.searchIcon}>
               <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="検索"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
+            </div> */}
+            <TextField
+              id="outlined-required"
+              label="検索"
+              defaultValue=""
+              variant="outlined"
+              onChange={(id) => setKeyWord(id.target.value)}
             />
+            <Button
+              className={classes.btn}
+              variant="contained"
+              startIcon={<SearchIcon />}
+              onClick={() => callSrchApi()}
+            >
+              検索
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

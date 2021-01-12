@@ -203,33 +203,40 @@ router.get("/completed", function (req, res) {
   //     }
   // });
   const page = req.query.page; //クエリパラメータの取得
-  //   let result = [];
-
-  //   var Path1 = path.join("http://localhost:3000/images/Apex1copy.jpg");
-  //   var Path2 = path.join("http://localhost:3000/images/1609718450388Apex2.jpg");
-  //   var Path3 = "http://localhost:3000/images/Apex1copy.jpg";
-  //   var Path3 = "http://localhost:3000/images/1609718450388Apex2.jpg";
-  //   if (page < 5) {
-  //     result.push(Path1);
-  //     result.push(Path2);
-  //   }
 
   //処理成功
   res.statusCode = 200;
-  //   res.send(Path)
-  //   res.sendFile(Path)
-  // res.json(result);
-  //   console.log(result);
-  //   console.log(Path3);
-  //   console.log(Path2);
-  console.log("page" + page);
 
-  if (page < 5) {
-    console.log("5未満です");
-    res.json([
-      { url: "http://localhost:3000/images/1609716527298Apex1.jpg", sid: "1" },
-      { url: "http://localhost:3000/images/1609718450388Apex2.jpg", sid: "2" },
-    ]);
+  console.log("page" + page);
+  //   { url: "http://localhost:3000/images/1609716527298Apex1.jpg", sid: "1" },
+  //   { url: "http://localhost:3000/images/1609718450388Apex2.jpg", sid: "2" },
+  let i = 1;
+  i = i+2;
+
+  var data = [
+    {
+      sid: i,
+      urls: {
+        url1: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url2: "http://localhost:3000/images/1609718450388Apex2.jpg",
+        url3: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        url4: "http://localhost:3000/images/1609718591674Apex4.jpg",
+      },
+    },
+    {
+      sid: i+1,
+      urls: {
+        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+  ];
+
+  if (page < 9) {
+    console.log(data);
+    res.json(data);
   } else {
     res.json([]);
   }

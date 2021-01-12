@@ -1,10 +1,34 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      width: "100%",
+    },
+    control: {
+      padding: theme.spacing(2),
+    },
+  })
+);
 
 const Scroll = (props: any) => {
   //表示するデータ
   const [list, setList] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const classes = useStyles();
+
+  //   const callSidApi = async (page: any) => {
+  //     const apiurl = "http://localhost:3000/api/method/completed?page=" + page;
+  //     const res = await fetch(apiurl);
+  //     const data = await res.json(); //取得データ
+  //     return data
+  //   };
 
   //項目を読み込むときのコールバック
   const loadMore = async (page: any) => {
@@ -12,25 +36,7 @@ const Scroll = (props: any) => {
     const res = await fetch(apiurl);
     const data = await res.json(); //取得データ
 
-    // (async () => {
-    //    console.log("即時間数スタート");
-
-    // })();
-    // const apiurl = "http://localhost:3000/api/method/completed?page=" + page;
-    // const data = await fetch(apiurl)
-    //   .then((res) => {
-    //     console.log("通信に成功しました");
-    //     return res.json();
-    //   })
-    //   .catch((error) => {
-    //     console.error("通信に失敗しました", error);
-    //     return null;
-    //   });
     console.log("page" + page);
-    // console.log("---------");
-    // console.log(data);
-    // console.log("---------");
-    // console.log("length" + data.length);
 
     //   データ件数が0件の場合、処理終了
     if (data.length < 1) {
@@ -43,29 +49,35 @@ const Scroll = (props: any) => {
     //apiからとってきたデータをlistに追加する
     const newList: any[] = [];
     data.forEach(function (da: any) {
-      //   setList([...list, da.url]);
-      newList.push(da.url);
+      const addList = [da.urls.url1, da.urls.url2, da.urls.url3, da.urls.url4];
+      newList.push(addList);
+      console.log("後newlist:" + newList[0][0]);
     });
     setList([...list, ...newList]);
-    console.log("後list:" + newList);
-
-    // setList([...list, ...data]);
-    // console.log("for文終了");
+    console.log("後list:" + list);
   };
 
   //各スクロール要素
   const items = (
-    <ul>
-      {list.map((value, index) => (
-        // <li>{value}</li>
-        <img key={index} src={value} alt={"sample"} />
-      ))}
-    </ul>
+    <div className={classes.paper}>
+      <Grid container>
+        {list.map((value, index) => (
+          <Grid item xs={3}>
+            {index}
+            <img key={index} src={value[0]} alt={"sample"} width="100%" />
+            <img key={index + 100} src={value[1]} alt={"sample"} width="100%" />
+            <img key={index + 101} src={value[2]} alt={"sample"} width="100%" />
+            <img key={index + 102} src={value[3]} alt={"sample"} width="100%" />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 
   //全体のスタイル
   const root_style = {
-    marginLeft: "50px",
+    marginLeft: "30px",
+    marginRight: "30px",
     marginTop: "50px",
   };
 
