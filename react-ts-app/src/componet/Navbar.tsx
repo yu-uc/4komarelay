@@ -1,15 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Scroll from "./Scroll";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
-  // Grid,
   Button,
-  // TextField,
-  // Container,
   AppBar,
   Toolbar,
-  InputBase,
-  IconButton,
+  // InputBase,
+  // IconButton,
   fade,
   Typography,
   Menu,
@@ -97,7 +95,7 @@ const Navbar = () => {
 
   //ドロップダウンメニュー
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
   //検索キーワード
   const [keyWord, setKeyWord] = React.useState("");
 
@@ -105,13 +103,15 @@ const Navbar = () => {
   const callSrchApi = async () => {
     console.log(keyWord);
   };
+  //完成作品のapi呼び出し
   const callKanseiApi = async (jyanru: any) => {
     console.log(jyanru);
     handleClose();
   };
+  //未完成作品のapi呼び出し
   const callMikanseiApi = async (jyanru: any) => {
     console.log(jyanru);
-    handleClose();
+    handleClose2();
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -119,6 +119,12 @@ const Navbar = () => {
   }; //ドロップダウンを選択したとき
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl2(event.currentTarget);
+  }; //ドロップダウンを選択したとき
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   return (
@@ -139,6 +145,9 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.koumoku}>
             マイページ
           </Typography>
+          <Typography variant="h6" className={classes.koumoku}>
+            新規作成
+          </Typography>
           <div>
             <Typography
               variant="h6"
@@ -156,9 +165,15 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>全て</MenuItem>
-              <MenuItem onClick={handleClose}>ギャグ</MenuItem>
-              <MenuItem onClick={handleClose}>シリアス</MenuItem>
+              <MenuItem onClick={() => callKanseiApi("全ての作品")}>
+                全ての作品
+              </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("ギャグ")}>
+                ギャグ
+              </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("シリアス")}>
+                シリアス
+              </MenuItem>
             </Menu>
           </div>
           <div>
@@ -167,27 +182,30 @@ const Navbar = () => {
               className={classes.koumoku}
               aria-controls="simple-menu2"
               aria-haspopup="true"
-              onClick={handleClick}
+              onClick={handleClick2}
             >
               未完成作品
             </Typography>
             <Menu
               id="simple-menu2"
-              anchorEl={anchorEl}
+              anchorEl={anchorEl2}
               keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
+              open={Boolean(anchorEl2)}
+              onClose={handleClose2}
             >
-              <MenuItem onClick={() => callKanseiApi("free")}>全て</MenuItem>
-              <MenuItem onClick={handleClose}>ギャグ</MenuItem>
-              <MenuItem onClick={handleClose}>ラブコメ</MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("全ての作品")}>
+                全ての作品
+              </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("ギャグ")}>
+                ギャグ
+              </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("ラブコメ")}>
+                ラブコメ
+              </MenuItem>
             </Menu>
           </div>
           {/* 検索フォーム */}
           <div className={classes.search}>
-            {/* <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div> */}
             <TextField
               id="outlined-required"
               label="検索"

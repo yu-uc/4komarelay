@@ -31,24 +31,25 @@ var pool = new pg.Pool({
 router.get("/login", function (req, res) {
   res.set({ "Access-Control-Allow-Origin": "*" });
 
-  var SQL = `SELECT pwd FROM user WHERE uid=\'${req.query.uid}\'`;
+  //   var SQL = `SELECT pwd FROM user WHERE uid=\'${req.query.uid}\'`;
 
-  pool.connect(function (err, client) {
-    if (err) {
-      console.log(err);
-    } else {
-      client.query(SQL, function (err, result) {
-        console.log(result.rows[0]);
-        if (result.rows[0] == undefined) {
-          res.send(false);
-        } else if (result.rows[0].pwd == req.query.pwd) {
-          res.send(true);
-        } else {
-          res.send(false);
-        }
-      });
-    }
-  });
+  //   pool.connect(function (err, client) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       client.query(SQL, function (err, result) {
+  //         console.log(result.rows[0]);
+  //         if (result.rows[0] == undefined) {
+  //           res.send(false);
+  //         } else if (result.rows[0].pwd == req.query.pwd) {
+  //           res.send(true);
+  //         } else {
+  //           res.send(false);
+  //         }
+  //       });
+  //     }
+  //   });
+  res.send(true);
 });
 
 //テスト用
@@ -210,8 +211,8 @@ router.get("/completed", function (req, res) {
   console.log("page" + page);
   //   { url: "http://localhost:3000/images/1609716527298Apex1.jpg", sid: "1" },
   //   { url: "http://localhost:3000/images/1609718450388Apex2.jpg", sid: "2" },
-  let i = 1;
-  i = i+2;
+  let i = page * 1;
+  i = i + 4;
 
   var data = [
     {
@@ -224,7 +225,25 @@ router.get("/completed", function (req, res) {
       },
     },
     {
-      sid: i+1,
+      sid: i + 1,
+      urls: {
+        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+    {
+      sid: i + 2,
+      urls: {
+        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+    {
+      sid: i + 3,
       urls: {
         url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
         url2: "http://localhost:3000/images/1609718591674Apex4.jpg",

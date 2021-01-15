@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, TextField, Container } from "@material-ui/core";
+import { UsersContext } from "../App";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +32,7 @@ const Login = (props: any) => {
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
+  const { state, dispatch } = useContext(UsersContext);
 
   const getAuthentication = async () => {
     console.log(userEmail);
@@ -55,10 +56,16 @@ const Login = (props: any) => {
 
     console.log(res);
     if (res) {
-      //console.log("true");
-      console.log(isLogin);
-      setIsLogin(true);
-      console.log(isLogin);
+      //usercontexをログイン状態に変更してuidを設定
+
+     dispatch({
+        type: "SINGIN",
+        payload: {
+          uid: userEmail,
+          // isLogin: true,
+        },
+      });
+      //メインページに移動
       handleToHomePage();
     } else {
       console.log("false");
