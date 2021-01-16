@@ -264,27 +264,83 @@ router.get("/completed", function (req, res) {
 router.get("/idsearch", function (req, res) {
   res.set({ "Access-Control-Allow-Origin": "*" });
 
-  var Searched = "";
-  var Uid = req.query.uid;
-  var SQL = `SELECT sid FROM sakuhin WHERE uid1 = \'${Uid}\' OR uid2 = \'${Uid}\' OR uid3 = \'${Uid}\' OR uid4 = \'${Uid}\'`;
-  console.log(SQL);
+  //   var Searched = "";
+  //   var Uid = req.query.uid;
+  //   var SQL = `SELECT sid FROM sakuhin WHERE uid1 = \'${Uid}\' OR uid2 = \'${Uid}\' OR uid3 = \'${Uid}\' OR uid4 = \'${Uid}\'`;
+  //   console.log(SQL);
 
-  pool.connect(function (err, client) {
-    if (err) {
-      console.log(err);
-    } else {
-      client.query(SQL, function (err, result) {
-        let i = 0;
-        while (result.rows[i] != undefined) {
-          console.log(result.rows[i]);
-          Searched = `${Searched},${result.rows[i].sid}`;
-          i += 1;
-        }
+  //   pool.connect(function (err, client) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       client.query(SQL, function (err, result) {
+  //         let i = 0;
+  //         while (result.rows[i] != undefined) {
+  //           console.log(result.rows[i]);
+  //           Searched = `${Searched},${result.rows[i].sid}`;
+  //           i += 1;
+  //         }
 
-        res.send(`Searched. IDhitted sid=(${Searched}) SQL=${SQL}`);
-      });
-    }
-  });
+  //         res.send(`Searched. IDhitted sid=(${Searched}) SQL=${SQL}`);
+  //       });
+  //     }
+  //   });
+  const page = req.query.page; //クエリパラメータの取得
+
+  //処理成功
+  res.statusCode = 200;
+
+  console.log("page" + page);
+  //   { url: "http://localhost:3000/images/1609716527298Apex1.jpg", sid: "1" },
+  //   { url: "http://localhost:3000/images/1609718450388Apex2.jpg", sid: "2" },
+  let i = page * 1;
+  i = i + 4;
+
+  var data = [
+    {
+      sid: i,
+      urls: {
+        url1: "http://localhost:3000/images/16096789893503komame.png",
+        url2: "http://localhost:3000/images/1609718450388Apex2.jpg",
+        url3: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        url4: "http://localhost:3000/images/1609718591674Apex4.jpg",
+      },
+    },
+    {
+      sid: i + 1,
+      urls: {
+        url1: "http://localhost:3000/images/16096789893503komame.png",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+    {
+      sid: i + 2,
+      urls: {
+        url1: "http://localhost:3000/images/16096789893503komame.png",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+    {
+      sid: i + 3,
+      urls: {
+        url1: "http://localhost:3000/images/16096789893503komame.png",
+        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      },
+    },
+  ];
+
+  if (page < 9) {
+    console.log(data);
+    res.json(data);
+  } else {
+    res.json([]);
+  }
 });
 
 router.get("/titlesearch", function (req, res) {

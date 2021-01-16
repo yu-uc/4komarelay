@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Scroll from "./Scroll";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -16,6 +16,9 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
+import { serchInAction } from "../reducks/users/actons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Navbar = () => {
+const Navbar = (props: any) => {
   const classes = useStyles();
 
   //ドロップダウンメニュー
@@ -99,18 +102,25 @@ const Navbar = () => {
   //検索キーワード
   const [keyWord, setKeyWord] = React.useState("");
 
+  const dispatch = useDispatch();
+  const selector = useSelector((state: any) => state);
+
   //検索フォームの情報からsidを取得する
   const callSrchApi = async () => {
     console.log(keyWord);
   };
-  //完成作品のapi呼び出し
+  //完成作品のapi呼び出しselector.serches.genre
   const callKanseiApi = async (jyanru: any) => {
-    console.log(jyanru);
+    console.log(selector.serches);
+    dispatch(serchInAction({ count: 1, genre: jyanru }));
     handleClose();
+    console.log("ppppppppppppppppppppppppppppppppppppppppp");
+    dispatch(push("/Return"));
+    console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+  
   };
   //未完成作品のapi呼び出し
   const callMikanseiApi = async (jyanru: any) => {
-    console.log(jyanru);
     handleClose2();
   };
 

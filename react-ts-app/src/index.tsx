@@ -1,22 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import createStore from "./reducks/store/store";
+import { ConnectedRouter } from "connected-react-router";
+import * as History from "history";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// const [user, setUser] = useState({
-//   isLogin: "fasle",
-//   uid: "11111",
-// });
-
-// export const UserContext = createContext(user);
+const history = History.createBrowserHistory();
+export const store = createStore(history);
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <UserContext.Provider value={user}> */}
-    <App />
-    {/* </UserContext.Provider> */}
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById("root")
 );
 

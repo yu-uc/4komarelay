@@ -1,8 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, TextField, Container } from "@material-ui/core";
-import { UsersContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { signInAction } from "../reducks/users/actons";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,9 +32,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Login = (props: any) => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+  const selector = useSelector((state: any) => state);
+
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const { state, dispatch } = useContext(UsersContext);
 
   const getAuthentication = async () => {
     console.log(userEmail);
@@ -57,14 +61,7 @@ const Login = (props: any) => {
     console.log(res);
     if (res) {
       //usercontexをログイン状態に変更してuidを設定
-
-     dispatch({
-        type: "SINGIN",
-        payload: {
-          uid: userEmail,
-          // isLogin: true,
-        },
-      });
+      dispatch(signInAction({ uid: userEmail, isLogin: true }));
       //メインページに移動
       handleToHomePage();
     } else {
@@ -75,14 +72,16 @@ const Login = (props: any) => {
   };
   //trueの時ページ遷移
   const handleToHomePage = () => {
-    props.history.push("/");
+    //
+    dispatch(push("/"));
+    // props.history.push("/");
   };
 
   return (
     <div>
       <Container maxWidth="xs">
         <Grid container spacing={1} alignItems="center" justify="center">
-          <h1>ログイン</h1>
+          <h1>ログイン{selector.users.uid}</h1>
         </Grid>
         <Grid container spacing={2} alignItems="center" justify="center">
           <form className={classes.root} noValidate autoComplete="off">

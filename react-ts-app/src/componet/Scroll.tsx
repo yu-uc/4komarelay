@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,17 +24,29 @@ const Scroll = (props: any) => {
   const [list, setList] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selector = useSelector((state: any) => state);
+  let num: number = selector.serches.count;
 
-  //   const callSidApi = async (page: any) => {
-  //     const apiurl = "http://localhost:3000/api/method/completed?page=" + page;
-  //     const res = await fetch(apiurl);
-  //     const data = await res.json(); //取得データ
-  //     return data
-  //   };
+  console.log("テスト用：；list");
+  console.log(list);
 
   //項目を読み込むときのコールバック
   const loadMore = async (page: any) => {
-    const apiurl = "http://localhost:3000/api/method/completed?page=" + page;
+    let apiurl = "";
+
+    if (num == 0) {
+      apiurl = "http://localhost:3000/api/method/completed?page=" + page;
+    } else if (num == 1) {
+      console.log("0のまま");
+      apiurl = "http://localhost:3000/api/method/idsearch?page=" + page;
+      console.log("1に変更");
+    } else if (num == 2) {
+    } else if (num == 3) {
+    } else {
+      //   apiurl = "http://localhost:3000/api/method/completed?page=" + page;
+    }
+
     const res = await fetch(apiurl);
     const data = await res.json(); //取得データ
 
@@ -51,10 +65,10 @@ const Scroll = (props: any) => {
     data.forEach(function (da: any) {
       const addList = [da.urls.url1, da.urls.url2, da.urls.url3, da.urls.url4];
       newList.push(addList);
-      console.log("後newlist:" + newList[0][0]);
     });
+    // props.setList([...props.list, ...newList]);
+    // setList(props.list);
     setList([...list, ...newList]);
-    console.log("後list:" + list);
   };
 
   //各スクロール要素
@@ -90,6 +104,7 @@ const Scroll = (props: any) => {
 
   return (
     <div style={root_style}>
+      {/* <button onClick={() => dispatch(setList([]))}></button> */}
       <InfiniteScroll
         loadMore={loadMore} //項目を読み込む際に処理するコールバック関数
         hasMore={hasMore} //読み込みを行うかどうかの判定

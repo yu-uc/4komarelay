@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, TextField, Container } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,9 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const Registration = (props: any) => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
- const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const getAuthentication = async () => {
     console.log(userEmail);
