@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Scroll from "./Scroll";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import {
   Button,
@@ -105,23 +103,29 @@ const Navbar = (props: any) => {
   const dispatch = useDispatch();
   const selector = useSelector((state: any) => state);
 
+  //マイページの表示を使用
+  const callMyPage = async () => {
+    dispatch(serchInAction({ count: 3, genre: "マイページ" }));
+    dispatch(push("/Return"));
+  };
+
   //検索フォームの情報からsidを取得する
-  const callSrchApi = async () => {
-    console.log(keyWord);
+  const callSerchApi = async () => {
+    dispatch(serchInAction({ count: 2, genre: keyWord }));
+    dispatch(push("/Return"));
   };
   //完成作品のapi呼び出しselector.serches.genre
   const callKanseiApi = async (jyanru: any) => {
     console.log(selector.serches);
-    dispatch(serchInAction({ count: 1, genre: jyanru }));
+    dispatch(serchInAction({ count: 0, genre: jyanru }));
     handleClose();
-    console.log("ppppppppppppppppppppppppppppppppppppppppp");
     dispatch(push("/Return"));
-    console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-  
   };
   //未完成作品のapi呼び出し
   const callMikanseiApi = async (jyanru: any) => {
+    dispatch(serchInAction({ count: 1, genre: jyanru }));
     handleClose2();
+    dispatch(push("/Return"));
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -141,21 +145,21 @@ const Navbar = (props: any) => {
     <div className={classes.root}>
       <AppBar className={classes.toolBar} position="static">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography variant="h5" className={classes.title}>
             ４コマリレー
           </Typography>
-          <Typography variant="h6" className={classes.koumoku}>
+          <Typography
+            variant="h6"
+            className={classes.koumoku}
+            onClick={() => callMyPage()}
+          >
             マイページ
           </Typography>
-          <Typography variant="h6" className={classes.koumoku}>
+          <Typography
+            variant="h6"
+            className={classes.koumoku}
+            onClick={() => dispatch(push("/Post"))}
+          >
             新規作成
           </Typography>
           <div>
@@ -175,7 +179,7 @@ const Navbar = (props: any) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => callKanseiApi("全ての作品")}>
+              <MenuItem onClick={() => callKanseiApi("all")}>
                 全ての作品
               </MenuItem>
               <MenuItem onClick={() => callKanseiApi("ギャグ")}>
@@ -184,6 +188,16 @@ const Navbar = (props: any) => {
               <MenuItem onClick={() => callKanseiApi("シリアス")}>
                 シリアス
               </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("ラブコメ")}>
+                ラブコメ
+              </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("スポーツ")}>
+                スポーツ
+              </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("アクション")}>
+                アクション
+              </MenuItem>
+              <MenuItem onClick={() => callKanseiApi("感動")}>感動</MenuItem>
             </Menu>
           </div>
           <div>
@@ -203,15 +217,25 @@ const Navbar = (props: any) => {
               open={Boolean(anchorEl2)}
               onClose={handleClose2}
             >
-              <MenuItem onClick={() => callMikanseiApi("全ての作品")}>
+              <MenuItem onClick={() => callMikanseiApi("all")}>
                 全ての作品
               </MenuItem>
               <MenuItem onClick={() => callMikanseiApi("ギャグ")}>
                 ギャグ
               </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("シリアス")}>
+                シリアス
+              </MenuItem>
               <MenuItem onClick={() => callMikanseiApi("ラブコメ")}>
                 ラブコメ
               </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("スポーツ")}>
+                スポーツ
+              </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("アクション")}>
+                アクション
+              </MenuItem>
+              <MenuItem onClick={() => callMikanseiApi("感動")}>感動</MenuItem>
             </Menu>
           </div>
           {/* 検索フォーム */}
@@ -227,7 +251,7 @@ const Navbar = (props: any) => {
               className={classes.btn}
               variant="contained"
               startIcon={<SearchIcon />}
-              onClick={() => callSrchApi()}
+              onClick={() => callSerchApi()}
             >
               検索
             </Button>

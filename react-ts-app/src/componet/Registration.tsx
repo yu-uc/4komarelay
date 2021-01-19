@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, TextField, Container } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import { signInAction } from "../reducks/users/actons";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,52 +33,44 @@ const Registration = (props: any) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const selector = useSelector((state: any) => state);
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
 
   const getAuthentication = async () => {
-    console.log(userEmail);
-    console.log(userPassword);
-
-    const data = { uid: userEmail, pwd: userPassword };
-
-    const param = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-
-      // リクエストボディ
-      body: JSON.stringify(data),
-    };
-
-    const url = "http://localhost:3000/api/method/";
-    // 入力したidとパスワードをapiに送信
-    const res = await fetch(url, param)
-      .then((res) => {
-        console.log("通信に成功しました");
-        return res.json();
-      })
-      .catch((error) => {
-        console.error("通信に失敗しました", error);
-        return null;
-      });
-
-    if (res) {
-      //console.log("true");
-      setIsLogin(true);
-      handleToHomePage();
+    if (userEmail == "" || userPassword == "") {
+      alert("入力情報が足りません");
     } else {
-      console.log("false");
-    }
+      const url =
+        "http://localhost:3000/api/method/register?uid=" +
+        userEmail +
+        "&pwd=" +
+        userPassword;
+      // 入力したidとパスワードをapiに送信
+      const res = await fetch(url)
+        .then((res) => {
+          console.log("通信に成功しました");
+          return res.json();
+        })
+        .catch((error) => {
+          console.error("通信に失敗しました", error);
+          return null;
+        });
 
-    return true;
+      if (res) {
+        dispatch(signInAction({ uid: userEmail, isLogin: true }));
+        handleToHomePage();
+      } else {
+        alert("ログインに失敗しました");
+      }
+
+      // return true;
+    }
   };
   //trueの時ページ遷移
   const handleToHomePage = () => {
-    props.history.push("/");
+    dispatch(push("/"));
   };
 
   return (

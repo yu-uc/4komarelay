@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Button, TextField, Container } from "@material-ui/core";
@@ -39,36 +39,37 @@ const Login = (props: any) => {
   const [userPassword, setUserPassword] = useState("");
 
   const getAuthentication = async () => {
-    console.log(userEmail);
-    console.log(userPassword);
-
-    const url =
-      "http://localhost:3000/api/method/login?uid=" +
-      userEmail +
-      "&pwd=" +
-      userPassword;
-    // 入力したidとパスワードをapiに送信
-    const res = await fetch(url)
-      .then((res) => {
-        console.log("通信に成功しました");
-        return res.json();
-      })
-      .catch((error) => {
-        console.error("通信に失敗しました", error);
-        return null;
-      });
-
-    console.log(res);
-    if (res) {
-      //usercontexをログイン状態に変更してuidを設定
-      dispatch(signInAction({ uid: userEmail, isLogin: true }));
-      //メインページに移動
-      handleToHomePage();
+    if (userEmail == "" || userPassword == "") {
+      alert("入力情報が足りません");
     } else {
-      console.log("false");
+      const url =
+        "http://localhost:3000/api/method/login?uid=" +
+        userEmail +
+        "&pwd=" +
+        userPassword;
+      // 入力したidとパスワードをapiに送信
+      const res = await fetch(url)
+        .then((res) => {
+          console.log("通信に成功しました");
+          return res.json();
+        })
+        .catch((error) => {
+          console.error("通信に失敗しました", error);
+          return null;
+        });
+
+      if (res) {
+        //usercontexをログイン状態に変更してuidを設定
+        dispatch(signInAction({ uid: userEmail, isLogin: true }));
+        //メインページに移動
+        handleToHomePage();
+      } else {
+        alert("ログインに失敗しました");
+        console.log("false");
+      }
     }
 
-    return true;
+    // return true;
   };
   //trueの時ページ遷移
   const handleToHomePage = () => {

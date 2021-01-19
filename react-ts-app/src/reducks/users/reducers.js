@@ -23,3 +23,14 @@ export const SerchReducer = (state = initialState.serches, action) => {
       return state;
   }
 };
+export const SidReducer = (state = initialState.sakuhin, action) => {
+  switch (action.type) {
+    case Action.SID:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};

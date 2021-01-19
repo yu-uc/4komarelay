@@ -4,7 +4,10 @@ import Login from "./componet/Login";
 import Home from "./componet/Home";
 import Registration from "./componet/Registration";
 import Return from "./componet/Return";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Post from "./componet/Post";
+import PostContinus from "./componet/PostContinus";
+
+import { Route, Switch } from "react-router-dom";
 
 //ログインしていなかったらloginのパスに飛ばす処理
 
@@ -57,6 +60,8 @@ const App = () => (
     <Route path="/login" component={Login} />
     <Route path="/Registration" component={Registration} />
     <Route path="/Return" component={Return} />
+    <Route path="/Post" component={Post} />
+    <Route path="/PostContinus" component={PostContinus} />
   </Switch>
 );
 export default App;

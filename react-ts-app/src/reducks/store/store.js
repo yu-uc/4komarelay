@@ -4,7 +4,7 @@ import {
   applyMiddleware,
 } from "redux";
 import { connectRouter, routerMiddleware } from "connected-react-router";
-import { UsersReducer, SerchReducer } from "../users/reducers";
+import { UsersReducer, SerchReducer, SidReducer } from "../users/reducers";
 
 export default function createStore(history) {
   return reduxCreateStore(
@@ -12,6 +12,7 @@ export default function createStore(history) {
       router: connectRouter(history),
       users: UsersReducer,
       serches: SerchReducer,
+      sakuhin: SidReducer,
     }),
     applyMiddleware(routerMiddleware(history))
   );

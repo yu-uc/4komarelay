@@ -115,44 +115,48 @@ router.post("/newupload", function (req, res) {
 
   upload(req, res, function (err) {
     if (err) {
-      res.send("Failed to write " + req.file.destination + " with " + err);
+      console.log(err);
+      res.send(false);
     } else {
-      var Path = path.join(
-        __dirname,
-        "../../../public/images/",
-        req.file.filename
-      );
-      var SQL = `INSERT INTO sakuhin (sid, title, genre, uid1, k1) VALUES (\'${
-        Date.now() + req.body.uid
-      }\',\'${req.body.title}\', \'${req.body.genre}\',\'${
-        req.body.uid
-      }\',\'${Path}\')`;
-      console.log(SQL);
+      // var Path = path.join(
+      //   __dirname,
+      //   "../../../public/images/",
+      //   req.file.filename
+      // );
+      // var SQL = `INSERT INTO sakuhin (sid, title, genre, uid1, k1) VALUES (\'${
+      //   Date.now() + req.body.uid
+      // }\',\'${req.body.title}\', \'${req.body.genre}\',\'${
+      //   req.body.uid
+      // }\',\'${Path}\')`;
+      // console.log(SQL);
+      console.log(req.body);
+      console.log(req.body.file);
+      res.send(true);
 
-      pool.connect(function (err, client) {
-        if (err) {
-          console.log(err);
-        } else {
-          client.query(SQL, function (err, result) {
-            console.log(result.command);
-          });
-        }
-      });
+      // pool.connect(function (err, client) {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     client.query(SQL, function (err, result) {
+      //       console.log(result.command);
+      //     });
+      //   }
+      // });
 
-      res.send(
-        " originalname= " +
-          req.file.originalname +
-          " filename= " +
-          req.file.filename +
-          " path=" +
-          Path +
-          " body.title=" +
-          req.body.title +
-          " body.genre=" +
-          req.body.genre +
-          " body.uid=" +
-          req.body.uid
-      );
+      // res.send(
+      //   " originalname= " +
+      //     req.file.originalname +
+      //     " filename= " +
+      //     req.file.filename +
+      //     " path=" +
+      //     Path +
+      //     " body.title=" +
+      //     req.body.title +
+      //     " body.genre=" +
+      //     req.body.genre +
+      //     " body.uid=" +
+      //     req.body.uid
+      // );
     }
   });
 });
@@ -161,20 +165,20 @@ router.get("/delete", function (req, res) {
   res.set({ "Access-Control-Allow-Origin": "*" });
 
   var Sid = req.query.sid;
-  var SQL = `DELETE FROM sakuhin WHERE sid = \'${Sid}\'`;
-  console.log(SQL);
+  // var SQL = `DELETE FROM sakuhin WHERE sid = \'${Sid}\'`;
+  // console.log(SQL);
 
-  pool.connect(function (err, client) {
-    if (err) {
-      console.log(err);
-    } else {
-      client.query(SQL, function (err, result) {
-        console.log(result.command);
-      });
-    }
-  });
-
-  res.send(Sid + " was Deleted. Date=" + Date.now() + " SQL=" + SQL);
+  // pool.connect(function (err, client) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     client.query(SQL, function (err, result) {
+  //       console.log(result.command);
+  //     });
+  //   }
+  // });
+  console.log(Sid);
+  res.send(true);
 });
 
 router.get("/completed", function (req, res) {
@@ -216,39 +220,43 @@ router.get("/completed", function (req, res) {
 
   var data = [
     {
-      sid: i,
-      urls: {
-        url1: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url2: "http://localhost:3000/images/1609718450388Apex2.jpg",
-        url3: "http://localhost:3000/images/1609718557317Apex3.jpg",
-        url4: "http://localhost:3000/images/1609718591674Apex4.jpg",
+      sid: "aaaa",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k2: "http://localhost:3000/images/1609718450388Apex2.jpg",
+        k3: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k4: "http://localhost:3000/images/1609718591674Apex4.jpg",
       },
     },
     {
-      sid: i + 1,
-      urls: {
-        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      sid: "bbbb",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
     {
-      sid: i + 2,
-      urls: {
-        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      sid: "ccccc",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
     {
-      sid: i + 3,
-      urls: {
-        url1: "http://localhost:3000/images/1609718557317Apex3.jpg",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      sid: "dddd",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
   ];
@@ -299,38 +307,42 @@ router.get("/idsearch", function (req, res) {
   var data = [
     {
       sid: i,
-      urls: {
-        url1: "http://localhost:3000/images/16096789893503komame.png",
-        url2: "http://localhost:3000/images/1609718450388Apex2.jpg",
-        url3: "http://localhost:3000/images/1609718557317Apex3.jpg",
-        url4: "http://localhost:3000/images/1609718591674Apex4.jpg",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k2: "http://localhost:3000/images/1609718450388Apex2.jpg",
+        k3: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k4: "http://localhost:3000/images/1609718591674Apex4.jpg",
       },
     },
     {
       sid: i + 1,
-      urls: {
-        url1: "http://localhost:3000/images/16096789893503komame.png",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
     {
       sid: i + 2,
-      urls: {
-        url1: "http://localhost:3000/images/16096789893503komame.png",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
     {
       sid: i + 3,
-      urls: {
-        url1: "http://localhost:3000/images/16096789893503komame.png",
-        url2: "http://localhost:3000/images/1609718591674Apex4.jpg",
-        url3: "http://localhost:3000/images/1609716527298Apex1.jpg",
-        url4: "http://localhost:3000/images/1609718450388Apex2.jpg",
+      title: "tesuto",
+      image: {
+        k1: "http://localhost:3000/images/1609718557317Apex3.jpg",
+        k2: "http://localhost:3000/images/1609718591674Apex4.jpg",
+        k3: "http://localhost:3000/images/1609716527298Apex1.jpg",
+        k4: "http://localhost:3000/images/1609718450388Apex2.jpg",
       },
     },
   ];

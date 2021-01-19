@@ -3,11 +3,14 @@ const initialState = {
     isLogin: false,
     uid: "",
   },
-  serches:{
-    count:0,
-    genre:"全ての作品"
-
-  }
+  serches: {
+    count: 0,
+    genre: "all",
+  },
+  sakuhin: {
+    sid: "",
+    koma:"",
+  },
 };
 
 export default initialState;

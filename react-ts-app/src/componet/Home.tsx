@@ -1,5 +1,5 @@
 import { push } from "connected-react-router";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { UsersContext } from "../App";
 import { signInAction } from "../reducks/users/actons";
@@ -30,6 +30,7 @@ const Home = () => {
       {/* {if(selectpr.users.isLogin)<Redirect to="/login" />} */}
       <div>
         <Navbar />
+      
         <h3>userID:{selector.users.uid}</h3>
         <h3>{selector.serches.genre}の検索結果</h3>
         <button onClick={() => dispatch(push("/login"))}></button>

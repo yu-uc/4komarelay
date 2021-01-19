@@ -3,7 +3,11 @@ import InfiniteScroll from "react-infinite-scroller";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import Delete from "./Delete";
+import PostButton from "./PostButton";
 import { push } from "connected-react-router";
+import { SidAction } from "../reducks/users/actons";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,13 +40,33 @@ const Scroll = (props: any) => {
     let apiurl = "";
 
     if (num == 0) {
-      apiurl = "http://localhost:3000/api/method/completed?page=" + page;
+      //完成作品
+      apiurl =
+        "http://localhost:3000/api/method/completed?page=" +
+        page +
+        "&genre=" +
+        selector.serches.genre;
     } else if (num == 1) {
-      console.log("0のまま");
-      apiurl = "http://localhost:3000/api/method/idsearch?page=" + page;
-      console.log("1に変更");
+      //未完成作品
+      apiurl =
+        "http://localhost:3000/api/method//uncompleted?page=" +
+        page +
+        "&genre=" +
+        selector.serches.genre;
     } else if (num == 2) {
+      //タイトル検索
+      apiurl =
+        "http://localhost:3000/api/method//titlesearch?page=" +
+        page +
+        "&genre=" +
+        selector.serches.genre;
     } else if (num == 3) {
+      //マイページ
+      apiurl =
+        "http://localhost:3000/api/method/idsearch?page=" +
+        page +
+        "&uid=" +
+        selector.users.uid;
     } else {
       //   apiurl = "http://localhost:3000/api/method/completed?page=" + page;
     }
@@ -63,11 +87,17 @@ const Scroll = (props: any) => {
     //apiからとってきたデータをlistに追加する
     const newList: any[] = [];
     data.forEach(function (da: any) {
-      const addList = [da.urls.url1, da.urls.url2, da.urls.url3, da.urls.url4];
+      const addList = [
+        da.image.k1,
+        da.image.k2,
+        da.image.k3,
+        da.image.k4,
+        da.sid,
+        da.title,
+        da.koma,
+      ];
       newList.push(addList);
     });
-    // props.setList([...props.list, ...newList]);
-    // setList(props.list);
     setList([...list, ...newList]);
   };
 
@@ -77,11 +107,20 @@ const Scroll = (props: any) => {
       <Grid container>
         {list.map((value, index) => (
           <Grid item xs={3}>
-            {index}
+            <h3>タイトル：{value[5]}</h3>
             <img key={index} src={value[0]} alt={"sample"} width="100%" />
-            <img key={index + 100} src={value[1]} alt={"sample"} width="100%" />
-            <img key={index + 101} src={value[2]} alt={"sample"} width="100%" />
-            <img key={index + 102} src={value[3]} alt={"sample"} width="100%" />
+            <img key={index + 100} src={value[1]} alt={""} width="100%" />
+            <img key={index + 101} src={value[2]} alt={""} width="100%" />
+            <img key={index + 102} src={value[3]} alt={""} width="100%" />
+            {(() => {
+              if (selector.serches.count == 3) {
+                return <Delete sid={value[4]} />;
+              } else if (selector.serches.count == 1) {
+                return <PostButton sid={value[4]} koma={value[6]} />;
+              } else {
+                return;
+              }
+            })()}
           </Grid>
         ))}
       </Grid>
